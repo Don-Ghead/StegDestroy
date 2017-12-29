@@ -1,0 +1,163 @@
+﻿Build started 23/06/2017 15:38:36.
+     1>Project "C:\technology\Trunk\core\utility\source\srl\srl.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I.. /IC:\technology\trunk\core\out\include\ /IC:\CSLOCAL\cstp\cstp/include/ImageMagick/ /Zi /nologo /W3 /WX- /Od /D _DEBUG /D WIN32 /D _WINDOWS /D _MBCS /D _USRDLL /D _SRL_IMPL /D UNICODE /D _UNICODE /D _VC80_UPGRADE=0x0710 /D WIN64 /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /RTC1 /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo".\Debug64\/" /Fd".\Debug64\/vc120.pdb" /FR".\Debug64\\" /Gd /TP /errorReport:prompt steg_data_types.cpp
+         steg_data_types.cpp
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/ChannelMoments.h(66): warning C4251: 'Magick::ChannelMoments::_huInvariants' : class 'std::vector<double,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::ChannelMoments'
+                 with
+                 [
+                     _Ty=double
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/ChannelMoments.h(99): warning C4251: 'Magick::ImageMoments::_channels' : class 'std::vector<Magick::ChannelMoments,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::ImageMoments'
+                 with
+                 [
+                     _Ty=Magick::ChannelMoments
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(457): warning C4251: 'Magick::DrawableBezier::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableBezier'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(499): warning C4251: 'Magick::DrawablePushClipPath::_id' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawablePushClipPath'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(527): warning C4251: 'Magick::DrawableClipPath::_id' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableClipPath'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(769): warning C4251: 'Magick::DrawableDensity::_density' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableDensity'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(977): warning C4251: 'Magick::DrawableFont::_font' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableFont'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(978): warning C4251: 'Magick::DrawableFont::_family' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableFont'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1146): warning C4251: 'Magick::DrawablePath::_path' : class 'std::list<Magick::VPath,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::DrawablePath'
+                 with
+                 [
+                     _Ty=Magick::VPath
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1235): warning C4251: 'Magick::DrawablePolygon::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::DrawablePolygon'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1255): warning C4251: 'Magick::DrawablePolyline::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::DrawablePolyline'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1339): warning C4251: 'Magick::DrawablePushPattern::_id' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawablePushPattern'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1945): warning C4251: 'Magick::DrawableText::_text' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableText'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(1946): warning C4251: 'Magick::DrawableText::_encoding' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::DrawableText'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2357): warning C4251: 'Magick::PathArcAbs::_coordinates' : class 'std::list<Magick::PathArcArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathArcAbs'
+                 with
+                 [
+                     _Ty=Magick::PathArcArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2379): warning C4251: 'Magick::PathArcRel::_coordinates' : class 'std::list<Magick::PathArcArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathArcRel'
+                 with
+                 [
+                     _Ty=Magick::PathArcArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2530): warning C4251: 'Magick::PathCurvetoAbs::_args' : class 'std::list<Magick::PathCurvetoArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathCurvetoAbs'
+                 with
+                 [
+                     _Ty=Magick::PathCurvetoArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2553): warning C4251: 'Magick::PathCurvetoRel::_args' : class 'std::list<Magick::PathCurvetoArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathCurvetoRel'
+                 with
+                 [
+                     _Ty=Magick::PathCurvetoArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2577): warning C4251: 'Magick::PathSmoothCurvetoAbs::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathSmoothCurvetoAbs'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2602): warning C4251: 'Magick::PathSmoothCurvetoRel::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathSmoothCurvetoRel'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2711): warning C4251: 'Magick::PathQuadraticCurvetoAbs::_args' : class 'std::list<Magick::PathQuadraticCurvetoArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathQuadraticCurvetoAbs'
+                 with
+                 [
+                     _Ty=Magick::PathQuadraticCurvetoArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2735): warning C4251: 'Magick::PathQuadraticCurvetoRel::_args' : class 'std::list<Magick::PathQuadraticCurvetoArgs,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathQuadraticCurvetoRel'
+                 with
+                 [
+                     _Ty=Magick::PathQuadraticCurvetoArgs
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2759): warning C4251: 'Magick::PathSmoothQuadraticCurvetoAbs::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathSmoothQuadraticCurvetoAbs'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2783): warning C4251: 'Magick::PathSmoothQuadraticCurvetoRel::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathSmoothQuadraticCurvetoRel'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2811): warning C4251: 'Magick::PathLinetoAbs::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathLinetoAbs'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2835): warning C4251: 'Magick::PathLinetoRel::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathLinetoRel'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(2977): warning C4251: 'Magick::PathMovetoAbs::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathMovetoAbs'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Drawable.h(3001): warning C4251: 'Magick::PathMovetoRel::_coordinates' : class 'std::list<Magick::Coordinate,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::PathMovetoRel'
+                 with
+                 [
+                     _Ty=Magick::Coordinate
+                 ]
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Exception.h(56): warning C4251: 'Magick::Exception::_what' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Exception'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/CoderInfo.h(71): warning C4251: 'Magick::CoderInfo::_name' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::CoderInfo'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/CoderInfo.h(72): warning C4251: 'Magick::CoderInfo::_description' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::CoderInfo'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/CoderInfo.h(73): warning C4251: 'Magick::CoderInfo::_mimeType' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::CoderInfo'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Montage.h(103): warning C4251: 'Magick::Montage::_fileName' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Montage'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Montage.h(105): warning C4251: 'Magick::Montage::_font' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Montage'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Montage.h(108): warning C4251: 'Magick::Montage::_label' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Montage'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Montage.h(112): warning C4251: 'Magick::Montage::_texture' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Montage'
+     1>c:\cslocal\cstp\cstp\include\imagemagick\Magick++/Montage.h(114): warning C4251: 'Magick::Montage::_title' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::Montage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(135): warning C4251: 'Magick::annotateImage::_text' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::annotateImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(214): warning C4251: 'Magick::cdlImage::_cdl' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::cdlImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(274): warning C4251: 'Magick::commentImage::_comment' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::commentImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(386): warning C4251: 'Magick::drawImage::_drawableList' : class 'std::list<Magick::Drawable,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'Magick::drawImage'
+                 with
+                 [
+                     _Ty=Magick::Drawable
+                 ]
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(652): warning C4251: 'Magick::labelImage::_label' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::labelImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1344): warning C4251: 'Magick::backgroundTextureImage::_backgroundTexture' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::backgroundTextureImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1519): warning C4251: 'Magick::fileNameImage::_fileName' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::fileNameImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1543): warning C4251: 'Magick::fontImage::_font' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::fontImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1603): warning C4251: 'Magick::magickImage::_magick' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::magickImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1862): warning C4251: 'Magick::tileNameImage::_tileName' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::tileNameImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1899): warning C4251: 'Magick::viewImage::_view' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::viewImage'
+     1>C:\CSLOCAL\cstp\cstp\include\ImageMagick\Magick++/STL.h(1912): warning C4251: 'Magick::x11DisplayImage::_display' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Magick::x11DisplayImage'
+     1>c:\technology\trunk\core\utility\source\srl\steg_data_types.cpp(138): warning C4715: 'cml::srl::Srl_exception::get_basic_except_info' : not all control paths return a value
+     1>c:\technology\trunk\core\utility\source\srl\steg_data_types.cpp(119): warning C4715: 'cml::srl::is_format_CV_supported' : not all control paths return a value
+     1>c:\technology\trunk\core\utility\source\srl\steg_data_types.cpp(94): warning C4715: 'cml::srl::is_format_supported' : not all control paths return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\technology\trunk\core\out\bin64\srl410_debug.dll" /INCREMENTAL /NOLOGO /LIBPATH:C:\technology\trunk\core\out\lib64\ CORE_DB_magick_.lib CORE_DB_Magick++_.lib opencv_core2410d.lib opencv_highgui2410d.lib opencv_ml2410d.lib opencv_imgproc2410d.lib opencv_features2d2410d.lib opencv_legacy2410d.lib libalglibd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug64\/srl410_debug.pdb" /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:"C:\technology\trunk\core\out\lib64\\srl410_debug.lib" /MACHINE:X64 /DLL .\Debug64\/steg_data_types.obj
+         C:\technology\trunk\core\out\lib64\ucl410_debug.lib
+         C:\technology\trunk\core\out\lib64\utilres410.lib
+         srl.vcxproj -> C:\technology\trunk\core\out\bin64\srl410_debug.dll
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\technology\trunk\core\out\bin64\srl410_debug.bsc" .\Debug64\steg_data_types.sbr
+       PostBuildEvent:
+         xcopy *.hpp C:\technology\trunk\core\out\include\\srl\  /s /y
+         xcopy export.h C:\technology\trunk\core\out\include\\srl\  /s /y
+         
+         :VCEnd
+         C:stegimg.hpp
+         C:steg_data_types.hpp
+         2 File(s) copied
+         C:export.h
+         1 File(s) copied
+     1>Done Building Project "C:\technology\Trunk\core\utility\source\srl\srl.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.07

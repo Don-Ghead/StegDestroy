@@ -29,26 +29,54 @@ using namespace std;
 ///
 namespace srl
 {
+
+	/*************************************************************************
+	*
+	*					Srl General Data Type Utility
+	*
+	*************************************************************************/
+
+	///
+	/// @brief	get image format pair, check for invalid return
+	///
+	Srl_img_format_pair get_format_pair(string format)
+	{
+		Srl_img_format_map::const_iterator iter = img_format_mappings.find(format);
+		if (!(img_format_mappings.end() == iter) )
+		{	
+			return iter->second;
+		}
+		else
+		{
+			return INVALID_IMG_FORMAT_PAIR;
+		}
+	}
+
+	///
+	/// @brief	Wrapper for image format support functions
+	///
+	/// @description	CHecks to see if the provided format is supported by either OCV or IM
+	///
+	/// @param[in]	format	string format
+	///
+	/// @return	bool	Returns true if format supported by one of them & no otherwise
     bool is_format_supported( string format )
     {
+		bool success = false;
         if ( !format.empty() )
         {
-            string lower_format = format;
-            std::transform( lower_format.begin() , lower_format.end() , lower_format.begin() , ::tolower );
+            string lowercase_format = format;
+            std::transform( lowercase_format.begin() , lowercase_format.end() , lowercase_format.begin() , ::tolower );
 
             if ( is_format_CV_supported( format ) || is_format_magick_supported( format ) )
             {   //if supported by CV drop out earlier to avoid unnecessary processing
-                return true;
-            }
-            else
-            {
-                return false;
+                success = true;
             }
 
         }
         // format string empty TODO
+		return false;
     }
-
 
     bool is_format_CV_supported( string format )
     {
@@ -56,14 +84,14 @@ namespace srl
         if ( !format.empty() )
         {
             // Lower the string for performance
-            string lower_format = format;
-            std::transform( lower_format.begin() , lower_format.end() , lower_format.begin() , ::tolower );
+            string lowercase_format = format;
+            std::transform( lowercase_format.begin() , lowercase_format.end() , lowercase_format.begin() , ::tolower );
 
             unsigned int index = 0;
 
             while ( !supported && !OPENCV_SUPPORTED_LIST[index].empty() )
             {
-                if ( lower_format.compare( OPENCV_SUPPORTED_LIST[index] ) )
+                if ( lowercase_format.compare( OPENCV_SUPPORTED_LIST[index] ) )
                 {
                     supported = true;
                     break;
@@ -117,15 +145,16 @@ namespace srl
     ///
     /// @brief destructors 
     ///
-    Srl_exception::Srl_exception( std::unique_ptr<cv::Exception> exception )
-        : m_im_except_ap( nullptr )
+    Srl_exception::Srl_exception( cv::Exception &exception )
+        :	m_cv_except_p(new cv::Exception(exception)),
+			m_im_except_p( nullptr )
+			
     {
-        m_cv_except_ap = std::move( exception );
     }
-    Srl_exception::Srl_exception( std::unique_ptr<Magick::Exception> exception )
-        : m_cv_except_ap( nullptr )
+    Srl_exception::Srl_exception( Magick::Exception &exception )
+        :	m_im_except_p(new Magick::Exception(exception)),
+			m_cv_except_p(nullptr)
     {
-        m_im_except_ap = std::move( exception );
     }
 
     ///
@@ -133,7 +162,7 @@ namespace srl
     ///
     bool Srl_exception::is_cv_exception( void )
     {
-        if ( nullptr != m_cv_except_ap )
+        if ( nullptr != m_cv_except_p )
         {
             return true;
         }
@@ -146,22 +175,28 @@ namespace srl
     ///
     /// @brief retrieves the basic exception info in string format
     ///
+	/// @param[out]	except_str	string reference to update with basic exception info
     bool Srl_exception::get_basic_except_info( string& except_str )
     {
+		bool success = false;
         if ( !except_str.empty() )
         {
             if ( is_cv_exception() )
             {
-                except_str = m_cv_except_ap->msg;
+                except_str = m_cv_except_p->msg;
+				success = true;
             }
             else
             {
-                except_str = m_im_except_ap->what();
+                except_str = m_im_except_p->what();
+				success = true;
             }
         }
         else
         {
-            return false;
+            success = false;
         }
+		return success;
     }
-} // srl
+
+} // END srl NAMESPACE

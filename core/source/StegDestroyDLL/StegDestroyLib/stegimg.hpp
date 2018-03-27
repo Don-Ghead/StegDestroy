@@ -58,7 +58,9 @@ namespace srl
         /// @param[in]	data_p		a pointer to the raw image data 
         /// @param[in]	img_format	a pair of enum to string created using get_format_pair()
         ///
-        Srl_steg_image( unsigned char* img_data_p , size_t data_length, Srl_img_format_pair img_format );
+        Srl_steg_image( unsigned char* img_data_p , 
+						size_t data_length, 
+						Srl_img_format_pair img_format );
 
         ///
         /// @brief	Alternative constructor for the steg image, takes an IplImage instead
@@ -125,12 +127,12 @@ namespace srl
         ///
         ///	@brief	m_mat_p		Matrix used to store any OpenCV compliant image files for cleaning
         ///
-        shared_ptr<cv::Mat> m_mat_ap;
+        shared_ptr<cv::Mat> m_mat_p;
 
         ///
         ///	@brief	m_img_p		Image class used to store any ImageMagick compliant image files that OpenCV couldn't handle
         ///
-        shared_ptr<Magick::Image> m_img_ap;
+        shared_ptr<Magick::Image> m_img_p;
 
         ///
         /// @brief	m_format	Holds the pair of Enum to String for this image
@@ -145,7 +147,7 @@ namespace srl
         ///
         /// @brief	m_exception_p	pointer to the exception raised during processing if any, otherwise Nullptr
         ///
-        unique_ptr<Srl_exception> m_exception_ap;
+        unique_ptr<Srl_exception> m_exception_p;
 
 
         /*************************************************************************
@@ -160,11 +162,12 @@ namespace srl
         ///
         /// @description	TODO
         ///
-        /// @param[in]	data_p		a pointer to the image data contained within an IplImage struct
+        /// @param[in]	img_format_in	image format to encode to 
         ///
         /// @return bool    true if img format was successfully encoded or false if an error occurred
         ///
-        bool encode( Srl_img_format_enum img_format_in);
+        bool encode(	Srl_img_format_pair img_format_in, 
+						Srl_jpgscrub_compression_level compression_lvl = SRL_COMPRESSION_DEFAULT);
     };
 }
 

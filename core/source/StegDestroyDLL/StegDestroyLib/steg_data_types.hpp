@@ -56,7 +56,9 @@ namespace srl
         SRL_EXCEPT_NONE ,
         SRL_EXCEPT_OPENCV ,
         SRL_EXCEPT_IMAGEMAGICK ,
+		SRL_ERROR_IMAGEMAGICK,
         SRL_EXCEPT_OTHER,
+		SRL_ERROR_OTHER,
         SRL_EXCEPT_READ
     };
 
@@ -73,12 +75,12 @@ namespace srl
         ///
         ///	@brief	holds the openCV version of an exception
         ///
-        unique_ptr<cv::Exception> m_cv_except_ap;
+        unique_ptr<cv::Exception> m_cv_except_p;
 
         ///
         /// @brief	holds the Magick++ version of an exception
         ///	
-        unique_ptr<Magick::Exception> m_im_except_ap;
+        unique_ptr<Magick::Exception> m_im_except_p;
 
         ///
         ///	@brief helper function used to determine what error message to return 
@@ -90,8 +92,8 @@ namespace srl
         ///
         /// @brief Constructors must take one of either CV or IM exceptions
         ///
-        Srl_exception( std::unique_ptr<cv::Exception> exception );
-        Srl_exception::Srl_exception( std::unique_ptr<Magick::Exception> exception );
+        Srl_exception( cv::Exception &exception );
+        Srl_exception( Magick::Exception &exception );
 
         ///
         /// @brief  simple destructor
@@ -114,25 +116,12 @@ namespace srl
     *
     *************************************************************************/
 
-    ///
-    /// @brief list of img format strings always supported by OpenCV. Must be terminated 
-    /// with an empty string. 
-    ///
-    static const string OPENCV_SUPPORTED_LIST[] = { "jpeg", "jpg" , "jpe", "jp2", "bmp", "png", "pbm",
-                                                    "tiff", "tif", "dib", "pbm", "pgm", "ppm", "ras", "sr", "" };
+	///
+	/// @brief	forward declared to keep the long lists at the bottom of the file
+	/// 
+	enum Srl_img_format_enum;
 
-    ///
-    /// @brief Levels of compression to use during JPEG encoding.
-    ///
-    enum Srl_img_compression_level
-    {
-        SRL_COMPRESSION_LOW ,
-        SRL_COMPRESSION_DEFAULT ,
-        SRL_COMRPESSION_HIGH
-    };
-
-
-    ///
+	///
     /// @brief indicates whether the image format is supported by the OpenCV library
     ///
     /// @param[in]   format    string value indicating the type of image
@@ -161,24 +150,57 @@ namespace srl
     ///
     ///	@brief	Typedef'ed map of enum to string to hold our image formats and facilitate the interface
     ///
-    typedef std::map<Srl_img_format_enum , std::string> Srl_img_format_map;
+    typedef std::map< std::string, Srl_img_format_pair> Srl_img_format_map;
+
+	/*************************************************************************
+	*
+	*					Srl general data types declarations
+	*
+	*************************************************************************/
+
+	///
+	/// @brief list of img format strings always supported by OpenCV. Must be terminated 
+	/// with an empty string. 
+	///
+	static const string OPENCV_SUPPORTED_LIST[] = { "jpeg", "jpg" , "jpe", "jp2", "bmp", "png", "pbm",
+		"tiff", "tif", "dib", "pbm", "pgm", "ppm", "ras", "sr", "" };
+
+	///
+	/// @brief list of img format strings always supported by OpenCV. Must be terminated 
+	/// with an empty string. 
+	///
+	enum Srl_img_format_enum
+	{
+		SRL_IMG_FORMAT_NONE,
+		SRL_IMG_FORMAT_JPEG_CVIM
+	};
+
+	///
+	/// @brief Levels of compression to use during JPEG encoding.
+	///
+	enum Srl_jpgscrub_compression_level
+	{
+		SRL_COMPRESSION_LOW = 50,
+		SRL_COMPRESSION_DEFAULT = 75,
+		SRL_COMRPESSION_HIGH = 100
+	};
+
+	///
+	/// @brief	Used to indicate invalid pairs or pairs not found
+	///
+	const static Srl_img_format_pair INVALID_IMG_FORMAT_PAIR(SRL_IMG_FORMAT_NONE, "INVALID");
 
     ///
     /// @brief	a static map to hold the values for the supported formats
+	///			where formats can have multiple common names (jpeg, jpg) 
+	///			there can be multiple entries here, however only a single 
+	///			entry in the img_format enum 
     ///
-    static Srl_img_format_map img_format_mappings = {
-        {SRL_IMG_FORMAT_JPEG_CVIM, "jpeg"},{SRL_IMG_FORMAT_JPEG_CVIM, "jpg"},
-        //{},{},{},{},{},
-        //{},{},{},{},{},{},{},
+    const static Srl_img_format_map img_format_mappings = {
+        { "jpeg", Srl_img_format_pair(SRL_IMG_FORMAT_JPEG_CVIM, "jpeg") },
+		{ "jpg", Srl_img_format_pair(SRL_IMG_FORMAT_JPEG_CVIM, "jpg") }
+        //Add rest
     };
-
-
-
-    enum Srl_img_format_enum
-    {
-        SRL_IMG_FORMAT_JPEG_CVIM
-    };
-
 
 } // srl
 

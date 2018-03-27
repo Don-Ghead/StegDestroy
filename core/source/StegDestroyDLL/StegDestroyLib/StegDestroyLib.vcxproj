@@ -104,10 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;STEGDESTROYLIB_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CORE_RL_MagickCore_.lib;CORE_RL_Magick++_.lib;CORE_RL_MagickWand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,15 +150,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\srl\stegimg.hpp" />
-    <ClInclude Include="..\..\..\..\..\srl\steg_data_types.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stegimg.hpp" />
+    <ClInclude Include="stegimg_handler.hpp" />
+    <ClInclude Include="steg_data_types.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\srl\stegimg.cpp" />
-    <ClCompile Include="..\..\..\..\..\srl\steg_data_types.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="stegimg_handler.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -163,8 +166,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="StegDestroyLib.cpp" />
+    <ClCompile Include="stegimg.cpp" />
+    <ClCompile Include="steg_data_types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\opencvdefault.redist.3.1.0\build\native\opencvdefault.redist.targets" Condition="Exists('..\packages\opencvdefault.redist.3.1.0\build\native\opencvdefault.redist.targets')" />
+    <Import Project="..\packages\opencvdefault.3.1.0\build\native\opencvdefault.targets" Condition="Exists('..\packages\opencvdefault.3.1.0\build\native\opencvdefault.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\opencvdefault.redist.3.1.0\build\native\opencvdefault.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\opencvdefault.redist.3.1.0\build\native\opencvdefault.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\opencvdefault.3.1.0\build\native\opencvdefault.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\opencvdefault.3.1.0\build\native\opencvdefault.targets'))" />
+  </Target>
 </Project>

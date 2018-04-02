@@ -151,11 +151,36 @@ namespace srl
 			
     {
     }
+
     Srl_exception::Srl_exception( Magick::Exception &exception )
         :	m_im_except_p(new Magick::Exception(exception)),
 			m_cv_except_p(nullptr)
     {
     }
+
+	Srl_exception::Srl_exception(srl::Srl_exception & exception)
+		:	m_cv_except_p(nullptr), 
+			m_im_except_p(nullptr)
+	{
+		if (exception.is_cv_exception())
+		{
+			m_cv_except_p.reset(new cv::Exception(exception.get_cv_except()));
+		}
+		else
+		{
+			m_im_except_p.reset(new Magick::Exception(exception.get_magick_except()));
+		}
+	}
+
+	cv::Exception Srl_exception::get_cv_except(void)
+	{
+		return *m_cv_except_p;
+	}
+
+	Magick::Exception Srl_exception::get_magick_except(void)
+	{
+		return *m_im_except_p;
+	}
 
     ///
     /// @brief returns true if the exception is from OpenCV else it's Magick++

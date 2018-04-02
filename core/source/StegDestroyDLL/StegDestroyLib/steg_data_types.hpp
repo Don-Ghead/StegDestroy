@@ -82,18 +82,25 @@ namespace srl
         ///	
         unique_ptr<Magick::Exception> m_im_except_p;
 
-        ///
-        ///	@brief helper function used to determine what error message to return 
-        ///
-        bool is_cv_exception( void );
-
     public:
+
+		///
+		///	@brief helper function used to determine what error message to return 
+		///
+		bool is_cv_exception(void);
 
         ///
         /// @brief Constructors must take one of either CV or IM exceptions
         ///
         Srl_exception( cv::Exception &exception );
         Srl_exception( Magick::Exception &exception );
+		Srl_exception( srl::Srl_exception &exception );
+
+		///
+		/// @brief Return copy of relevant exception member
+		///
+		cv::Exception get_cv_except(void);
+		Magick::Exception get_magick_except(void);
 
         ///
         /// @brief  simple destructor

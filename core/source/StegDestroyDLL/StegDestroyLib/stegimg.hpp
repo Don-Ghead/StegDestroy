@@ -102,8 +102,8 @@ namespace srl
         ///
         /// @brief  retrieves the m_exception_p member to translate to a friendly error message by the handler
         ///
-        const Srl_exception const* exception( void ) const;
-
+        Srl_exception exception( void );
+		
         ///
         /// @brief retrieves exception status from the exception member pair 
         ///
@@ -133,11 +133,6 @@ namespace srl
         ///	@brief	m_img_p		Image class used to store any ImageMagick compliant image files that OpenCV couldn't handle
         ///
         shared_ptr<Magick::Image> m_img_p;
-
-        ///
-        /// @brief	m_format	Holds the pair of Enum to String for this image
-        ///
-        Srl_img_format_pair m_format;
         
         ///
         ///	@brief	m_err_status	contains the current error status or NONE if there were no problems 
@@ -149,6 +144,11 @@ namespace srl
         ///
         unique_ptr<Srl_exception> m_exception_p;
 
+	public:
+		///
+		/// @brief	m_format	Holds the pair of Enum to String for this image
+		///
+		Srl_img_format_pair m_format;
 
         /*************************************************************************
         *

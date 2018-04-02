@@ -83,7 +83,11 @@ Srl_steg_image::Srl_steg_image( unsigned char * data_p , size_t data_length , Sr
     }
 }
 
-//This isn't relevant right now but still needs to be updated to work with smart pointers
+///
+///UNUSED - Equivalent construct in C is IplImage but not necessary at present
+///
+///This isn't relevant right now but still needs to be updated to work with smart pointers
+///
 Srl_steg_image::Srl_steg_image( const IplImage * data_p , Srl_img_format_pair img_format)
     :   m_img_p( nullptr ) ,
         m_mat_p( nullptr ) ,
@@ -143,27 +147,25 @@ Srl_steg_image::Srl_steg_image( const IplImage * data_p , Srl_img_format_pair im
 }
 
 //Rework with smart pointers
-Srl_steg_image::Srl_steg_image( const Srl_steg_image & img_copy_r )
+Srl_steg_image::Srl_steg_image( const Srl_steg_image & img_copy )
 {
     m_err_status = SRL_EXCEPT_NONE;
-    //First copy the image data 
-    if ( nullptr != img_copy_r.m_img_p.get() )
+    //First copy the image data from either CV or Magick member
+    if ( nullptr != img_copy.m_img_p.get() )
     {
-        m_img_p = img_copy_r.m_img_p;
+        m_img_p.reset(new shared_ptr<Magick::Image>( img_copy.m_img_p));
+		m_mat_p = nullptr;
     }
-    else if ( nullptr != img_copy_r.m_mat_p.get() )
+    else if ( nullptr != img_copy.m_mat_p.get() )
     {
-        m_mat_p = img_copy_r.m_mat_p;
+        m_mat_p.reset(new shared_ptr<cv::Mat>(img_copy.m_mat_p));
     }
     //now the format + check the error status to see if we need to get the exception
-    m_format = img_copy_r.m_format;
-    if ( SRL_EXCEPT_NONE != img_copy_r.m_err_status )
+    m_format = img_copy.m_format;
+    if ( SRL_EXCEPT_NONE != img_copy.m_err_status )
     {
-        m_err_status = img_copy_r.m_err_status;
-        if ( nullptr != img_copy_r.exception() )
-        {
-             //m_exception_ap.get() = img_copy_r.exception(); //TODO - Figure out how to copy the exception if there is one 
-        }
+        m_err_status = img_copy.m_err_status;
+		m_exception_p.reset(new Srl_exception(img_copy.exception));
     }
 }
 
@@ -183,9 +185,9 @@ std::string Srl_steg_image::format( void ) const
 ///
 /// @brief returns the Srl_exception member if there is one otherwise nullptr
 ///
-Srl_exception const * Srl_steg_image::exception( void ) const
+Srl_exception Srl_steg_image::exception( void ) 
 {
-    return m_exception_p.get();
+    return *(m_exception_p.get());
 }
 
 ///
@@ -219,9 +221,17 @@ const void* Srl_steg_image::get_img_data( void ) const
 bool Srl_steg_image::encode( Srl_img_format_pair img_format_in, Srl_jpgscrub_compression_level compression_lvl)
 {
 	bool success = false;
-	if (nullptr != m_img_p.get())
+	if (nullptr != m_img_p.get()) 
 	{
-		m_img_p->magick(img_format_in.second);
+		try
+		{
+			m_img_p->magick(img_format_in.second);
+		}
+		catch (Magick::Exception &e)
+		{
+			m_exception_p.reset(new Srl_exception(e));
+			m_err_status = SRL_EXCEPT_IMAGEMAGICK;
+		}
 	}
 	else if (nullptr != m_mat_p.get())
 	{

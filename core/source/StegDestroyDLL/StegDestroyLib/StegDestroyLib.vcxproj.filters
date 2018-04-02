@@ -24,10 +24,10 @@
     <ClInclude Include="steg_data_types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stegimg.hpp">
+    <ClInclude Include="stegimg_handler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stegimg_handler.hpp">
+    <ClInclude Include="stegimg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

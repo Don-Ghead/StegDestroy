@@ -41,18 +41,10 @@ namespace srl
 		///
 		/// @description	Using this constructor means the user has already called the img helper
 		///					functions to determine whether the img format is supported and wrapped 
-		///					each into it's own Srl_steg_image, adding to a vector and passing in by reference.
+		///					each into it's own shared_ptr to an Srl_steg_image and added to a vector.
+		///					It is done like this to make use of the efficiency of the std::move operator
 		///
-		Srl_jpgscrub_stegimg_handler( std::vector<Srl_steg_image> &img_data_v );
-
-		///
-		/// @brief	constructor for the steg image handler, takes raw image data instead
-		///
-		/// @description	This is for raw data which has an unknown format (as far as the program is concerned)
-		///					and will attempt to decode each one into an Srl_stegimg so that post construction, both 
-		///					handler constructors would be at the same stage of processing. 
-		///
-		Srl_jpgscrub_stegimg_handler(std::vector<void*> &img_data_v);
+		Srl_jpgscrub_stegimg_handler( std::vector<std::shared_ptr<Srl_steg_image> > &img_data_v );
 
 		~Srl_jpgscrub_stegimg_handler();
 
@@ -63,8 +55,13 @@ namespace srl
 		*************************************************************************/
 
 	public:
+
 		///
-		/// @brief  Retrieve the vector of Srl_steg_images 
+		/// @brief  Retrieve vector of all images
+		///
+		/// @note	if calling this method prior to destruction of the img_handler the user must 
+		///			transfer ownership using the std::move() function, or else the images will go 
+		///			out of scope. 
 		///
 		vector< shared_ptr<Srl_steg_image> > get_images();
 		
@@ -79,20 +76,23 @@ namespace srl
 		///
 		///	@brief	m_compression_level		Enumerated value to simplify known compression levels
 		///
+		/// @description	for now this will be a single compression level applied to all images.
+		///					it will however be updated later to allow for different levels on individual images
+		///
 		Srl_jpgscrub_compression_level m_compression_level;
 
 		///
 		///	@brief	m_images_p		Vector containing shared_ptrs to all images, element indices for the vector
 		///							passed to the constructor remain the same throughout the program.
 		///
-		std::vector< shared_ptr<Srl_steg_image> > m_images_p;
+		std::vector< shared_ptr<Srl_steg_image> > m_images_v;
 
 		///
 		///	@brief	m_err_images_p	Vector containing shared_ptrs to only the images that encountered errors during
 		///							the processing or encoding of the images themselves. Read/Write errors are likely
 		///							the cause of an external reason so would not be included for example. 
 		///
-		std::vector< shared_ptr<Srl_steg_image> > m_err_images_p;
+		std::vector< shared_ptr<Srl_steg_image> > m_err_images_v;
 
 
 		/*************************************************************************
@@ -103,28 +103,52 @@ namespace srl
 	public:
 
 		///
-		/// @brief	Function to encode the image data into the provided format. Returns true if it succeeded without error
+		/// @brief	Converts the CV::Matrix to a Magick::Image
 		///
 		/// @description	TODO
 		///
-		/// @param[in]	img_format_in	image format to encode to 
+		/// @param[in]	cv_mat		Reference to CV matrix to be converted
 		///
-		/// @return bool    true if img format was successfully encoded or false if an error occurred
+		/// @param[in]	magick_img	Reference to Magick Image to be filled 
 		///
-		static void mat_to_magick(cv::Mat &cv_mat, Magick::Image magick_img);
+		/// @return void
+		///
+		static void mat_to_magick(cv::Mat &cv_mat, Magick::Image &magick_img);
 
+		///
+		/// @brief	Converts the Magick::Image to a CV::Matrix
+		///
+		/// @description	TODO
+		///
+		/// @param[in]	magick_img	Reference to Magick Image to be converted
+		///
+		/// @param[in]	cv_mat		Reference to CV matrix to be filled
+		///
+		/// @return void
+		///
 		static void magick_to_mat(Magick::Image &magick_img, cv::Mat &cv_mat);
 
 		///
-		/// @brief	Function to encode the image data into the provided format. Returns true if it succeeded without error
+		/// @brief	Function to encode all images data into the provided format. Returns true if it succeeded without error
 		///
-		/// @description	TODO
+		/// @description	If image is already in the specified format it will re-encode it using the compression level
+		///					member. 
 		///
 		/// @param[in]	img_format_in	image format to encode to 
 		///
-		/// @return bool    true if img format was successfully encoded or false if an error occurred
+		/// @return		Srl_exception_status	SRL_EXCEPT_NONE if all images were encoded without major errors
+		/// 
+		Srl_exception_status encode_all_to_format(Srl_img_format_pair img_format);
+
 		///
-		static Srl_exception_status encode_to_format(Srl_img_format_enum img_format);
+		/// @brief	Function to encode  images back to their original formats using the built in image format member
+		///
+		/// @description	If image is already in host format post encoding (i.e. image was a JPEG to begin with) then 
+		///					nothing happens to the image. 
+		///
+		/// @return		Srl_exception_status	SRL_EXCEPT_NONE if all images were encoded without major errors
+		///
+		Srl_exception_status encode_all_to_original_format(void);
 	};
 
 }

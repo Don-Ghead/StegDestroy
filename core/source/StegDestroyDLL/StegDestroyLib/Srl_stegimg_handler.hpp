@@ -6,29 +6,26 @@
 /// @brief Primary stegimg handler for the Srl::jpgscrub project
 ///
 /// @section VERSION
-/// 4.10.0
-///
-/// @section COPYRIGHT
-/// &copy; June 2017 Clearswift Ltd. All rights reserved.
+/// 1.0.10
 ///
 /// @section DESCRIPTION 
-/// <long description>
+///  
 //------------------------------------------------------------------------------------
 
 #pragma once
 
-#ifndef _STEGIMG_HANDLER_HPP
-#define _STEGIMG_HANDLER_HPP
+#ifndef _SRL_STEGIMG_HANDLER_HPP
+#define _SRL_STEGIMG_HANDLER_HPP
 
 #include <vector>
-#include "stegimg.hpp"
-
-
+#include "Srl_stegimg.hpp"
+#include "Srl_steg_logger.hpp"
+#include "Srl_stegimg_handler_base.hpp"
 
 namespace srl
 {
 	
-	class Srl_jpgscrub_stegimg_handler
+	class Srl_jpgscrub_stegimg_handler : protected Srl_stegimg_handler_base
 	{
 		/*************************************************************************
 		*
@@ -94,6 +91,8 @@ namespace srl
 		///
 		std::vector< shared_ptr<Srl_steg_image> > m_err_images_v;
 
+
+		std::shared_ptr<steg_logger> m_logger_p;
 
 		/*************************************************************************
 		*

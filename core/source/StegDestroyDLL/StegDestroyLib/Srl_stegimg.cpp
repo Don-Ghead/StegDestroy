@@ -1,27 +1,55 @@
-// $Id$
 //------------------------------------------------------------------------------------
 ///
 /// @file   stegimg.cpp
 ///
 /// @brief <description>
 ///
-/// @section VERSION
-/// 4.10.0
-///
-/// @section COPYRIGHT
-/// &copy; June 2017 Clearswift Ltd. All rights reserved.
 ///
 /// @section DESCRIPTION 
 /// <long description>
 //------------------------------------------------------------------------------------
 
-#include "stegimg.hpp"
+#include "stdafx.h"
+
+#include "Srl_stegimg.hpp"
+
 using namespace srl;
 using namespace Magick;
 using namespace cv;
+using namespace std;
 
+/***************************************************
+*
+*					Steg Image base
+*
+****************************************************/
+
+Srl_steg_image_base::Srl_steg_image_base(void* raw_data,
+	std::string img_format,
+	Srl_exception_status status,
+	std::shared_ptr<Srl_exception_base> exception)
+	
+	:	m_raw_buf_p(raw_data),
+		m_format(img_format),
+		m_err_status(status),
+		m_exception(exception)
+		
+{
+}
+
+void* Srl_steg_image_base::data(void)
+{
+	return m_raw_buf_p;
+}
+
+/***************************************************
+*
+*				JpgScrub steg_image
+*
+****************************************************/
 Srl_steg_image::Srl_steg_image( unsigned char * data_p , size_t data_length , Srl_img_format_pair img_format )
-    :   m_format(img_format),
+    :   Srl_steg_image_base( (void*)data_p, img_format.second),
+		m_format(img_format),
         m_exception_p(nullptr),
         m_err_status(SRL_EXCEPT_NONE)
 {
@@ -52,6 +80,53 @@ Srl_steg_image::Srl_steg_image( unsigned char * data_p , size_t data_length , Sr
 			m_err_status = SRL_EXCEPT_IMAGEMAGICK;
         }
     }
+
+	//EXAMPLE CODE----------------
+#include <iostream>
+	string error_msg;
+	if (is_format_magick_supported(img_format.second))
+	{
+		try
+		{
+			// as this can fail, we'll avoid potential memory leak by putting this first step
+			// into it's own try catch 
+			Blob temp_blob(data_p, data_length);
+			try
+			{
+				// this is where we try to read our data into the blob and the image so there is potential 
+				// for a fair few things going wrong hence the number of errors to catch
+				m_img_p.reset(new Magick::Image(temp_blob));
+			}
+			catch (Magick::WarningCoder &e)
+			{
+				if ("CODER::FORMAT_INVALID" == e.what())
+				{
+					error_msg = "Warning: non-critical error with format of :" + img_format.second;
+					m_err_status = SRL_WARNING_FORMAT_INVALID;
+				}
+				else if("CODER::WRONG_CH_TYPE" == e.what())
+				{
+					error_msg = "Warning: non-critical error with channel type of:" + img_format.second;
+					m_err_status = SRL_WARNING_CHTYPE;
+				}
+			}
+			catch (Magick::Error & e)
+			{
+				m_exception_p.reset(new Srl_exception(e));
+				m_err_status = SRL_ERROR_IMAGEMAGICK;
+			}
+			// If we got here then we have successfully read the image data into the image member
+			m_mat_p = nullptr;
+		}
+		catch (Magick::Exception & e)
+		{
+			m_exception_p.reset(new Srl_exception(e));
+			m_err_status = SRL_EXCEPT_IMAGEMAGICK;
+		}
+	}
+
+	//EXAMPLE CODE-----------
+
 	//Magick++ doesn't provide a validate() function like the scripting versions do, perhaps
 	//because this is done by default in the image constructor but because we're carpet catching 
 	//errors & exceptions, any issues with the image should be caught in there so check if our 
@@ -83,71 +158,12 @@ Srl_steg_image::Srl_steg_image( unsigned char * data_p , size_t data_length , Sr
     }
 }
 
-///
-///UNUSED - Equivalent construct in C is IplImage but not necessary at present
-///
-///This isn't relevant right now but still needs to be updated to work with smart pointers
-///
-Srl_steg_image::Srl_steg_image( const IplImage * data_p , Srl_img_format_pair img_format)
-    :   m_img_p( nullptr ) ,
-        m_mat_p( nullptr ) ,
-        m_format( img_format ) ,
-        m_exception_p( nullptr ) ,
-        m_err_status( SRL_EXCEPT_NONE )
-{
-	bool success = false;
-	string err_status;
-    if ( is_format_CV_supported( img_format.second ) )
-    {
-        try
-        {
-            // try to read in out data to the CV matrix
-            *m_mat_p = cv::cvarrToMat( data_p );
-        }
-        catch ( cv::Exception &e )
-        {
-			m_exception_p.reset(new Srl_exception(e));
-			m_err_status = SRL_EXCEPT_OPENCV;
-        }
-    }
-    // if that wasn't successful for whatever reason we still can try to read it into a Blob
-    if( nullptr == m_mat_p->data )
-    {
-        try
-        {
-            // Construct a Blob instance first so that we don't have to worry
-            // about object construction failure due to a minor warning exception
-            // being thrown.
-            Blob temp_blob;
-            try
-            {
-                temp_blob.update( data_p->imageData , data_p->imageSize );
-                // this is where we try to read our data into the blob and the image so there is potential 
-                // for a fair few things going wrong hence the number of errors to catch
-                m_img_p->read( temp_blob );
-            }
-            catch(Magick::Error &e)
-            {
-				m_exception_p.reset(new Srl_exception(e));
-				m_err_status = SRL_ERROR_IMAGEMAGICK;
-            }
-                        
-        }
-        catch ( Magick::Exception &e )
-        {
-			m_exception_p.reset(new Srl_exception(e));
-			m_err_status = SRL_EXCEPT_IMAGEMAGICK;
-        }
-    }
-    
-	if (!success)
-	{
-		//Create exception & allocate it to exception member
-	}
-}
-
 //Rework with smart pointers
-Srl_steg_image::Srl_steg_image( const Srl_steg_image & img_copy )
+Srl_steg_image::Srl_steg_image( Srl_steg_image & img_copy )
+	:	Srl_steg_image_base(img_copy.data(), img_copy.format(), img_copy.exception_status(), img_copy.m_exception),
+		m_format(img_copy.m_format),
+		m_exception_p(img_copy.exception()),
+		m_err_status(img_copy.m_err_status)
 {
     m_err_status = SRL_EXCEPT_NONE;
     //First copy the image data from either CV or Magick member
@@ -185,9 +201,9 @@ std::string Srl_steg_image::format( void ) const
 ///
 /// @brief returns the Srl_exception member if there is one otherwise nullptr
 ///
-Srl_exception Srl_steg_image::exception( void ) 
+std::shared_ptr<Srl_exception> Srl_steg_image::exception( void ) 
 {
-    return *(m_exception_p.get());
+    return m_exception_p;
 }
 
 ///

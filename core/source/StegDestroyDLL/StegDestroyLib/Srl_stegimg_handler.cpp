@@ -1,12 +1,31 @@
-#include "stegimg_handler.hpp"
-#include "steg_data_types.hpp"
+//------------------------------------------------------------------------------------
+///
+/// @file   stegimg.cpp
+///
+/// @brief <description>
+///
+///
+/// @section DESCRIPTION 
+/// <long description>
+//------------------------------------------------------------------------------------
+
+#include "stdafx.h"
+
+#include "Srl_stegimg_handler.hpp"
+#include "Srl_steg_data_types.hpp"
 
 using namespace srl;
 using namespace std;
 
 typedef std::vector<shared_ptr<Srl_steg_image>>::iterator image_iterator;
 
+Srl_stegimg_handler_base::Srl_stegimg_handler_base(std::shared_ptr<steg_logger> logger)
+	: m_logger(logger)
+{
+}
+
 Srl_jpgscrub_stegimg_handler::Srl_jpgscrub_stegimg_handler(std::vector<std::shared_ptr<Srl_steg_image> >& img_data_v)
+	: Srl_stegimg_handler_base(m_logger)
 {
 	//Swap ownership to our own image vector member 
 	m_images_v = std::move(img_data_v);
@@ -49,6 +68,9 @@ Srl_exception_status Srl_jpgscrub_stegimg_handler::encode_all_to_format(Srl_img_
 		{
 			//Error occured during encoding 
 			status = (*iter)->exception_status();
+			string err_string;
+			(*iter)->exception()->get_basic_except_info(err_string);
+			m_logger_p->add_logfile_detail(err_string);
 			m_err_images_v.push_back((*iter));
 		}
 	}

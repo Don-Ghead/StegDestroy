@@ -15,17 +15,17 @@
 /// <long description>
 //------------------------------------------------------------------------------------
 
-// Pragma once to disable header stop warning
 #pragma once
 
 #ifndef _SRL_STEGIMG_HPP
 #define _SRL_STEGIMG_HPP
 
-#include "steg_data_types.hpp"
+#include "Srl_steg_data_types.hpp"
 #include <opencv2\core\types_c.h>
 #include <utility>
 #include <string>
 
+#include "Srl_stegimg_base.hpp"
 
 
     ///
@@ -40,7 +40,7 @@ namespace srl
     ///
     /// @param[in] exception The error returned from either OpenCV or ImageMagick. 
     ///
-    class Srl_steg_image
+    class Srl_steg_image : protected Srl_steg_image_base
     {
     
 
@@ -63,23 +63,13 @@ namespace srl
 						Srl_img_format_pair img_format );
 
         ///
-        /// @brief	Alternative constructor for the steg image, takes an IplImage instead
-        ///
-        /// @description	TODO
-        ///
-        /// @param[in]	data_p		a pointer to the image data contained within an IplImage struct
-        /// @param[in]	img_format	a pair of enum to string created using get_format_pair()
-        ///
-        Srl_steg_image( const IplImage* data_p , Srl_img_format_pair );
-
-        ///
         /// @brief	Copy constructor for the steg image; 
         ///
         /// @description    TODO/NOTE - MIGHT NOT BE NECESSARY BUT IS GOOD TO HAVE 
         ///
-        /// @param[in]	    img_copy_r  a const reference to the image to be copied
+        /// @param[in]	    img_copy_r  a reference to the image to be copied
         ///
-        Srl_steg_image( const Srl_steg_image& img_copy_r );
+        Srl_steg_image( Srl_steg_image& img_copy_r );
 
         ///
         /// @brief  destructor
@@ -102,7 +92,7 @@ namespace srl
         ///
         /// @brief  retrieves the m_exception_p member to translate to a friendly error message by the handler
         ///
-        Srl_exception exception( void );
+        std::shared_ptr<Srl_exception> exception( void );
 		
         ///
         /// @brief retrieves exception status from the exception member pair 
@@ -127,12 +117,12 @@ namespace srl
         ///
         ///	@brief	m_mat_p		Matrix used to store any OpenCV compliant image files for cleaning
         ///
-        shared_ptr<cv::Mat> m_mat_p;
+        std::shared_ptr<cv::Mat> m_mat_p;
 
         ///
         ///	@brief	m_img_p		Image class used to store any ImageMagick compliant image files that OpenCV couldn't handle
         ///
-        shared_ptr<Magick::Image> m_img_p;
+        std::shared_ptr<Magick::Image> m_img_p;
         
         ///
         ///	@brief	m_err_status	contains the current error status or NONE if there were no problems 
@@ -142,7 +132,7 @@ namespace srl
         ///
         /// @brief	m_exception_p	pointer to the exception raised during processing if any, otherwise Nullptr
         ///
-        unique_ptr<Srl_exception> m_exception_p;
+        std::shared_ptr<Srl_exception> m_exception_p;
 
 	public:
 		///
@@ -158,9 +148,7 @@ namespace srl
     public:
 
         ///
-        /// @brief	Function to encode the image data into the provided format. Returns true if it succeeded without error
-        ///
-        /// @description	TODO
+        /// @brief	Overridden base class Function to encode the image data into the provided format. Returns true if it succeeded without error
         ///
         /// @param[in]	img_format_in	image format to encode to 
         ///

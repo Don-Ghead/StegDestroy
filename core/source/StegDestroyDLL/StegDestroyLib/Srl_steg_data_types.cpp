@@ -15,7 +15,8 @@
 /// <long description>
 //------------------------------------------------------------------------------------
 
-#include "steg_data_types.hpp"
+#include "stdafx.h"
+#include "Srl_steg_data_types.hpp"
 
 #include <algorithm>
 
@@ -138,28 +139,67 @@ namespace srl
 
     /*************************************************************************
     *
-    *			Srl Exception Classes + data types implementation
+    *			Srl Exception Base implementation
     *
     *************************************************************************/
 
+	///
+	/// @brief Exception base constructor, assigns error message and line of error  
+	///
+	/// @param[in]	except_msg	message passed from down from children
+	///
+	/// @param[in]	err_val		integer value that can represent whatever the implementation designates
+	///
+	Srl_exception_base::Srl_exception_base(std::string except_msg, int err_val)
+		:	m_except_msg(except_msg),
+			m_except_err_code(err_val)
+	{	
+	}
+
+	void Srl_exception_base::get_basic_except_info(std::string &except_string, int &err_val)
+	{
+		except_string = m_except_msg;
+		err_val = m_except_err_code;
+	}
+	
+	/*************************************************************************
+	*
+	*			Srl JpgScrub Exception implementation
+	*
+	*************************************************************************/
+
     ///
-    /// @brief destructors 
+    /// @brief CV Exception constructor, assigns error message and line of error  
     ///
+	/// @param[in]	exception	cv::Exception to be handled
+	///
     Srl_exception::Srl_exception( cv::Exception &exception )
-        :	m_cv_except_p(new cv::Exception(exception)),
-			m_im_except_p( nullptr )
-			
+        :	Srl_exception_base(exception.what(), exception.line),
+			m_cv_except_p(new cv::Exception(exception)),
+			m_im_except_p( nullptr )			
     {
     }
 
+	///
+	/// @brief Magick Exception constructor, assigns error message and 0  
+	///
+	/// @param[in]	exception	cv::Exception to be handled
+	///
     Srl_exception::Srl_exception( Magick::Exception &exception )
-        :	m_im_except_p(new Magick::Exception(exception)),
+        :	Srl_exception_base(exception.what(), 0), //Magick++ does not return integer error values
+			m_im_except_p(new Magick::Exception(exception)),
 			m_cv_except_p(nullptr)
     {
     }
 
+	///
+	/// @brief Srl_Exception copy constructor  
+	///
+	/// @param[in]	exception	cv::Exception to be handled
+	///
 	Srl_exception::Srl_exception(srl::Srl_exception & exception)
-		:	m_cv_except_p(nullptr), 
+		:	Srl_exception_base(exception.m_except_msg, exception.m_except_err_code),
+			m_cv_except_p(nullptr), 
 			m_im_except_p(nullptr)
 	{
 		if (exception.is_cv_exception())

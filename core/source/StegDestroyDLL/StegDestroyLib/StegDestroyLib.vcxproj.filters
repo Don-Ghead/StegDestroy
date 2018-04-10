@@ -18,16 +18,22 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="Srl_steg_data_types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="steg_data_types.hpp">
+    <ClInclude Include="Srl_steg_logger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stegimg_handler.hpp">
+    <ClInclude Include="Srl_stegimg.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stegimg.hpp">
+    <ClInclude Include="Srl_stegimg_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Srl_stegimg_handler_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Srl_stegimg_handler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,16 +44,16 @@
     <ClCompile Include="StegDestroyLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="Srl_steg_logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="steg_data_types.cpp">
+    <ClCompile Include="Srl_stegimg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stegimg.cpp">
+    <ClCompile Include="Srl_stegimg_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stegimg_handler.cpp">
+    <ClCompile Include="Srl_steg_data_types.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

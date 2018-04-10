@@ -13,26 +13,20 @@
 /// <long description>
 //------------------------------------------------------------------------------------
 
-
-#ifdef STEGDESTROYLIB_EXPORTS
-#define STEGDESTROYLIB_API __declspec(dllexport)
-#else
-#define STEGDESTROYLIB_API __declspec(dllimport)
-#endif
-
 #pragma once 
-#ifndef _CML_STEG_DATA_TYPES_HPP
-#define _CML_STEG_DATA_TYPES_HPP
+
+#ifndef _SRL_STEG_DATA_TYPES_HPP
+#define _SRL_STEG_DATA_TYPES_HPP
 
 #include <string>
 #include <memory>
 
 #include <Magick++.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
-using namespace cv;
-using namespace std;
+//#include <opencv2\imgcodecs\imgcodecs.hpp>
+#include <opencv2\core\core.hpp>
+#include <opencv2\highgui\highgui.hpp>
+
 
 ///
 /// @brief The srl namespace contains all of the StegDestroy buildings blocks, functionality
@@ -54,6 +48,8 @@ namespace srl
     enum Srl_exception_status
     {
         SRL_EXCEPT_NONE ,
+		SRL_WARNING_CHTYPE,
+		SRL_WARNING_FORMAT_INVALID,
         SRL_EXCEPT_OPENCV ,
         SRL_EXCEPT_IMAGEMAGICK ,
 		SRL_ERROR_IMAGEMAGICK,
@@ -62,25 +58,49 @@ namespace srl
         SRL_EXCEPT_READ
     };
 
+	///
+	/// @brief   Base library agnostic exception class. No pure virtual functions 
+	///
+	class Srl_exception_base
+	{
+	protected:
+
+		///
+		/// @brief	Holds the original error message produced by the library 
+		///
+		std::string m_except_msg;
+
+		///
+		/// @brief	Holds the error code value from the exception
+		///
+		int m_except_err_code;
+
+	public:
+
+		
+		Srl_exception_base( std::string except_msg, int err_val);
+
+		void get_basic_except_info(std::string &except_string, int &err_val);
+	};
+	 
     ///
     /// @brief   basic exception class which holds the explicit error information needed to 
     /// diagnose an error for either OpenCV or ImageMagick libraries. 
     ///
-    /// @param[in] exception The error returned from either OpenCV or ImageMagick. 
-    ///
-    struct Srl_exception
+
+    class Srl_exception : protected Srl_exception_base
     {
     private:
 
         ///
         ///	@brief	holds the openCV version of an exception
         ///
-        unique_ptr<cv::Exception> m_cv_except_p;
+        std::unique_ptr<cv::Exception> m_cv_except_p;
 
         ///
         /// @brief	holds the Magick++ version of an exception
         ///	
-        unique_ptr<Magick::Exception> m_im_except_p;
+        std::unique_ptr<Magick::Exception> m_im_except_p;
 
     public:
 
@@ -90,12 +110,17 @@ namespace srl
 		bool is_cv_exception(void);
 
         ///
-        /// @brief Constructors must take one of either CV or IM exceptions
-        ///
+        /// @brief	Constructors must take one of either CV or IM exceptions
+		///
+		/// @param[in] exception	The exception thrown by either OpenCV or ImageMagick. 
+		///
+        /// @note	exception is the base class for all other derived errors which can be thrown 
+		///			so this shouldn't cause a problem
+		///
         Srl_exception( cv::Exception &exception );
         Srl_exception( Magick::Exception &exception );
 		Srl_exception( srl::Srl_exception &exception );
-
+		
 		///
 		/// @brief Return copy of relevant exception member
 		///
@@ -112,7 +137,7 @@ namespace srl
         ///
         /// @param[out] except_str returns basic exception information in friendly string format
         ///
-        bool get_basic_except_info( string& except_str );
+        bool get_basic_except_info( std::string& except_str );
 
     }; //Srl_exception
 
@@ -133,21 +158,21 @@ namespace srl
     ///
     /// @param[in]   format    string value indicating the type of image
     ///
-    bool is_format_CV_supported( string format );
+    bool is_format_CV_supported( std::string format );
 
     ///
     /// @brief indicates whether the image format is supported by the Magick++ library
     ///
     /// @param[in]   format    string value indicating the type of image
     ///
-    bool is_format_magick_supported( string format );
+    bool is_format_magick_supported( std::string format );
 
     ///
     /// @brief indicates whether the image format is supported by the SDK 
     ///
     /// @param[in]   format    string value indicating the type of image
     ///
-    bool is_format_supported( string format );
+    bool is_format_supported( std::string format );
 
     ///
     ///	@brief	holds a singular pair of img format to string values
@@ -169,7 +194,7 @@ namespace srl
 	/// @brief list of img format strings always supported by OpenCV. Must be terminated 
 	/// with an empty string. 
 	///
-	static const string OPENCV_SUPPORTED_LIST[] = { "jpeg", "jpg" , "jpe", "jp2", "bmp", "png", "pbm",
+	static const std::string OPENCV_SUPPORTED_LIST[] = { "jpeg", "jpg" , "jpe", "jp2", "bmp", "png", "pbm",
 		"tiff", "tif", "dib", "pbm", "pgm", "ppm", "ras", "sr", "" };
 
 	///

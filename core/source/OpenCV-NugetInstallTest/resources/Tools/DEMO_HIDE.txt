@@ -1,1 +1,0 @@
-StegTool.exe -h ..\Images\testimgs_original\PPM_Test.ppm -p 10K.txt -o ..\Images\testimgs_payload\StegPPM_Test.ppm

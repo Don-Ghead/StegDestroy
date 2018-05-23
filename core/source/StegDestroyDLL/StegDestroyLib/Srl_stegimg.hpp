@@ -24,6 +24,8 @@
 #include <opencv2\core\types_c.h>
 #include <utility>
 #include <string>
+#include <vector>
+#include <iostream>
 
 #include "Srl_stegimg_base.hpp"
 

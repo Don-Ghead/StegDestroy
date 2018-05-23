@@ -23,7 +23,6 @@
 
 #include <Magick++.h>
 
-//#include <opencv2\imgcodecs\imgcodecs.hpp>
 #include <opencv2\core\core.hpp>
 #include <opencv2\highgui\highgui.hpp>
 

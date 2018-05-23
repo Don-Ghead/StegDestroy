@@ -1,0 +1,9 @@
+PROVE PAYLOAD HAS BEEN EMBEDDED + CAN BE EXTRACTED
+--------------------------------------------------
+StegTool.exe -e ..\Images\testimgs_payload\StegPPM_Test_70.ppm -z 10240 -o ..\Results\extracted_pl.txt
+
+RECOVER PAYLOAD ONCE IMG's HAVE BEEN TRANSFORMED -- Rotate -> Crop -> JPEG
+------------------------------------------------ 
+StegTool.exe -e ..\Resources\img_altered\RS_StegKoala.ppm -z 10240 -o ..\Resources\extracted_pl\RS_pl_ext.txt
+StegTool.exe -e ..\Resources\img_altered\C_StegKoala.ppm -z 10240 -o ..\Resources\extracted_pl\C_pl_ext.txt
+StegTool.pl -e ..\Resources\img_altered\J_StegKoala.jpg -z 10240 -o ..\Resources\extracted_pl\J_pl_ext.txt --WONT WORK (NOT PBM)

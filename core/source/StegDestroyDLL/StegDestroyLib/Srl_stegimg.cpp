@@ -157,7 +157,7 @@ Srl_steg_image::Srl_steg_image( unsigned char * data_p , size_t data_length , Sr
 		}
     }
 }
-
+/*
 //Rework with smart pointers
 Srl_steg_image::Srl_steg_image( Srl_steg_image & img_copy )
 	:	Srl_steg_image_base(img_copy.data(), img_copy.format(), img_copy.exception_status(), img_copy.m_exception),
@@ -181,10 +181,10 @@ Srl_steg_image::Srl_steg_image( Srl_steg_image & img_copy )
     if ( SRL_EXCEPT_NONE != img_copy.m_err_status )
     {
         m_err_status = img_copy.m_err_status;
-		m_exception_p.reset(new Srl_exception(img_copy.exception));
+		m_exception_p.reset(new Srl_exception(img_copy.m_exception_p));
     }
 }
-
+*/
 Srl_steg_image::~Srl_steg_image()
 {
     //All managed using smart pointers so nothing to worry about 
@@ -260,7 +260,7 @@ bool Srl_steg_image::encode( Srl_img_format_pair img_format_in, Srl_jpgscrub_com
 
 		//This reserves the current amount of memory the matrix holds, in theory we're 
 		//Only ever going to be shrinking images in size, however multiply by 1.5 for a buffer
-		size_t reserve_bytes = 1.5 * m_mat_p->rows * m_mat_p->cols * m_mat_p->channels;
+		size_t reserve_bytes = 1.5 * m_mat_p->rows * m_mat_p->cols * 3;
 		cv_outbuf.reserve(reserve_bytes);
 
 		try {

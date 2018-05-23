@@ -2,10 +2,10 @@
 ADD DESCRIPTION
 */
 
-#include <iostream>
-
+#include "stdafx.h"
 #include "Srl_steg_logger.hpp"
 
+#include <iostream>
 #include <Windows.h>
 #include <stdio.h>
 

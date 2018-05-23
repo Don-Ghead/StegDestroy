@@ -141,15 +141,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;STEGDESTROYLIB_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\include;C:\INCLUDE\OpenCV3.4.1\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CORE_RL_MagickCore_.lib;CORE_RL_Magick++_.lib;CORE_RL_MagickWand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\INCLUDE\ImageMagick-7.0.7-Q16\lib;C:\INCLUDE\OpenCV3.4.1\opencv\build\x64\vc15\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CORE_RL_MagickCore_.lib;CORE_RL_Magick++_.lib;CORE_RL_MagickWand_.lib;opencv_world341.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
